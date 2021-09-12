@@ -21,4 +21,8 @@ public class WordService {
                 .orElseThrow(() -> new WordLengthNotSupportedException(length))
                 .getValue();
     }
+
+    private void test(){
+        System.out.println("There has been a commit");
+    }
 }
