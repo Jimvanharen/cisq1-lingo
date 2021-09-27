@@ -15,6 +15,7 @@ public class WordService {
         this.wordRepository = wordRepository;
     }
 
+
     public String provideRandomWord(Integer length) {
         return this.wordRepository
                 .findRandomWordByLength(length)
