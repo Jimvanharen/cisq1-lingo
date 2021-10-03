@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo;
 
+import nl.hu.cisq1.lingo.trainer.domain.Hint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

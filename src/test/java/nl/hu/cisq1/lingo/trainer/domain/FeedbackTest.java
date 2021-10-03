@@ -24,6 +24,4 @@ class FeedbackTest {
                 List.of(Mark.CORRECT, Mark.ABSENT, Mark.CORRECT, Mark.ABSENT, Mark.CORRECT));
         assertFalse(fb.isWordGuessed(fb));
     }
-
-
 }

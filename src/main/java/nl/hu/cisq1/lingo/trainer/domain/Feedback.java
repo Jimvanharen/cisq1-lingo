@@ -22,6 +22,14 @@ public class Feedback {
         return true;
     }
 
+    public String getAttempt() {
+        return attempt;
+    }
+
+    public List<Mark> getMark() {
+        return mark;
+    }
+
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
