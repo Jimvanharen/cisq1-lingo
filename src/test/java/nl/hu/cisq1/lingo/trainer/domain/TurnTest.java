@@ -17,14 +17,14 @@ class TurnTest {
     @MethodSource("provideTurnFeedbackExamples")
     public void giveTurnFeedback(Feedback feedback, Round round, int turnCount){
         Turn turn = new Turn(feedback, round, turnCount);
-        turn.turnFeedback();
+        System.out.println(turn.turnFeedback(new ArrayList<Mark>()));
     }
 
     private static Stream<Arguments> provideTurnFeedbackExamples(){
         return Stream.of(
                 Arguments.of(
-                        new Feedback("aardgas", new ArrayList<Mark>()),
-                        new Round(new Word("aardgas"), new Game(null, 0)),
+                        new Feedback("aalkorf", new ArrayList<Mark>()),
+                        new Round(new Word("aardgas"), new Game(null, 0), null),
                         2));
     }
 }

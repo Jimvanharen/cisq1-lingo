@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,57 +19,50 @@ public class Turn {
         }
     }
 
-    public List<Mark> turnFeedback(){
-        List<Mark> newFeedback = new ArrayList<>();
-        if(turnCount > 1){
-            //newFeedback = previousFeedback;
-        }
+    public void startTurn(String attempt){
 
+    }
+
+    public List<Mark> turnFeedback(List<Mark> prevFeedback){
+        List<Mark> newFeedback = new ArrayList<>(feedback.getAttempt().length());
+        if(turnCount > 1 && !prevFeedback.isEmpty()){
+            newFeedback = prevFeedback;
+        }
+        //else if(prevFeedback.size() < feedback.getAttempt().length() || prevFeedback.size() > feedback.getAttempt().length()){
+          //  throw new InvalidParameterException();
+        //}
+
+        //Check for all invalid
         if(round.getWord().getToBeGuessedWord().length() > feedback.getAttempt().length() || round.getWord().getToBeGuessedWord().length() < feedback.getAttempt().length()){
             for(int i = 0; i < feedback.getAttempt().length(); i++){
                 newFeedback.add(i, Mark.INVALID);
             }
+            return newFeedback;
         }
-
+        //Check for all Correct
         if(feedback.getAttempt().equals(round.getWord().getToBeGuessedWord())){
             for(int i = 0; i < feedback.getAttempt().length(); i++){
                 newFeedback.add(i, Mark.CORRECT);
                 round.getGame().setScore(round.getGame().getScore() + (5 * (5 - turnCount) + 5));
             }
-            newFeedback.forEach(System.out::println);
             return newFeedback;
         }
-        //CHECK FOR ABSENT
-        else if(!feedback.getAttempt().equals(round.getWord().getToBeGuessedWord()) &&
-                !round.getWord().getToBeGuessedWord().contains(feedback.getAttempt())){
-            for(int i = 0; i < feedback.getAttempt().length(); i++){
-                newFeedback.add(i, Mark.ABSENT);
-            }
-            newFeedback.forEach(System.out::println);
-            return newFeedback;
-        }
-
-        //Check for CORRECT and PRESENT
-        else if(round.getWord().getToBeGuessedWord().contains(feedback.getAttempt())){
+        //Check for CORRECT and PRESENT and ABSENT
             for(int i = 0; i < feedback.getAttempt().length(); i++){
                 if(round.getWord().getToBeGuessedWord().charAt(i) == feedback.getAttempt().charAt(i)){
-                    newFeedback.remove(i);
-                    newFeedback.add(i, Mark.CORRECT);
+                    newFeedback.add(Mark.CORRECT);
                 }
                 else if(round.getWord().getToBeGuessedWord().charAt(i) != feedback.getAttempt().charAt(i)){
-                    if(round.getWord().getToBeGuessedWord().contains
-                            (Character.toString(feedback.getAttempt().charAt(i)))){
-                        newFeedback.remove(i);
-                        newFeedback.add(i, Mark.PRESENT);
+                    if(round.getWord().getToBeGuessedWord().contains(
+                            (Character.toString(feedback.getAttempt().charAt(i))))){
+                        newFeedback.add(Mark.PRESENT);
                     }
-                    else{
-                        newFeedback.remove(i);
-                        newFeedback.add(i, Mark.ABSENT);
+                    else if(!round.getWord().getToBeGuessedWord().contains(
+                            (Character.toString(feedback.getAttempt().charAt(i))))){
+                        newFeedback.add(Mark.ABSENT);
                     }
                 }
             }
-        }
-
         return newFeedback;
     }
 }
