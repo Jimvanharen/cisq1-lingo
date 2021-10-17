@@ -65,4 +65,8 @@ public class Turn {
             }
         return newFeedback;
     }
+
+    public int getTurnCount() {
+        return turnCount;
+    }
 }
