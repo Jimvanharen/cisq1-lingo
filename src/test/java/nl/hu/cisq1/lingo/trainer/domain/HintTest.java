@@ -17,6 +17,7 @@ class HintTest {
     public void giveHint(List<Character> previousHint, String wordToGuess, List<Mark> marks){
         Hint hint = new Hint(previousHint, new Feedback(wordToGuess, marks));
         Hint nextHint = hint.giveHint();
+
         assertNotEquals(nextHint.getHintList(), previousHint);
         assertEquals(List.of('a', 'a', 'r', 'd', 'g', 'a', 's'), nextHint.getHintList());
     }

@@ -18,7 +18,7 @@ public class GameController {
         this.gameService = gameService;
     }
 
-    @GetMapping("/start-game")
+    @PostMapping("/start-game")
     public ResponseEntity<?> startGame(){
         try {
             gameService.startGame();

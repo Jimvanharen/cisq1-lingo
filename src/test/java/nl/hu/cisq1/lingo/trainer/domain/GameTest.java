@@ -21,5 +21,8 @@ public class GameTest {
         assertEquals("aardgas", game.getRound().getWord().getToBeGuessedWord());
         assertEquals(0, game.getRound().getTurn().getTurnCount());
         assertEquals(10, game.getScore());
+        assertEquals(5, Game.getMaxRounds());
     }
+
+
 }

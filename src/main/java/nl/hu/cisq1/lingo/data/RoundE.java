@@ -22,19 +22,23 @@ public class RoundE {
     @JoinColumn(name = "game_id")
     private GameE game;
 
-    @OneToMany(mappedBy = "round")
+    @OneToMany(mappedBy = "round", cascade = CascadeType.ALL)
     private List<TurnE> turns;
 
     public RoundE(){}
 
-    public RoundE(Word word, GameE game ,List<TurnE> turns){
+    public RoundE(Word word, GameE game, List<TurnE> turns){
         this.game = game;
         this.word = word;
         this.turns = turns;
     }
 
     public void addTurn(TurnE turnE){
-        turns.add(turnE);
+        turnE.setTurnCount(turnE.getTurnCount() + 1);
+        if(turnE.getTurnCount() <= 5){
+            turns.add(turnE);
+
+        }
     }
 
     public Word getWord() {

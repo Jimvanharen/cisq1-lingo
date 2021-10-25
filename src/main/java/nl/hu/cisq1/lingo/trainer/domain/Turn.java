@@ -28,9 +28,6 @@ public class Turn {
         if(turnCount > 1 && !prevFeedback.isEmpty()){
             newFeedback = prevFeedback;
         }
-        //else if(prevFeedback.size() < feedback.getAttempt().length() || prevFeedback.size() > feedback.getAttempt().length()){
-          //  throw new InvalidParameterException();
-        //}
 
         //Check for all invalid
         if(round.getWord().getToBeGuessedWord().length() > feedback.getAttempt().length() || round.getWord().getToBeGuessedWord().length() < feedback.getAttempt().length()){

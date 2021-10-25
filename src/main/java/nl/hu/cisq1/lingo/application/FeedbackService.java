@@ -22,9 +22,6 @@ public class FeedbackService {
         if(turn.getTurnCount() > 1 && !prevFeedback.isEmpty()){
             newFeedback = prevFeedback;
         }
-        //else if(prevFeedback.size() < feedback.getAttempt().length() || prevFeedback.size() > feedback.getAttempt().length()){
-        //  throw new InvalidParameterException();
-        //}
 
         //Check for all invalid
         if(round.getWord().getValue().length() > turn.getGuess().length() || round.getWord().getValue().length() < turn.getGuess().length()){
@@ -58,5 +55,9 @@ public class FeedbackService {
             }
         }
         return newFeedback;
+    }
+
+    public void saveFeedback(FeedbackE feedbackE){
+        feedbackRepository.save(feedbackE);
     }
 }

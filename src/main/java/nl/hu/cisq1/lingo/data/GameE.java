@@ -1,5 +1,7 @@
 package nl.hu.cisq1.lingo.data;
 
+import nl.hu.cisq1.lingo.trainer.domain.GameStatus;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,14 +16,18 @@ public class GameE {
     @OneToMany(mappedBy = "game")
     private List<RoundE> round;
 
+    @Enumerated(EnumType.STRING)
+    private GameStatus gamestatus;
+
     @Column
     private int score;
 
     public GameE(){}
 
-    public GameE(List<RoundE> rounds, int score){
+    public GameE(List<RoundE> rounds, int score, GameStatus gameStatus){
         this.round = rounds;
         this.score = score;
+        this.gamestatus = gameStatus;
     }
 
     public void addRound(RoundE roundE){
@@ -34,6 +40,10 @@ public class GameE {
 
     public void setRound(List<RoundE> round) {
         this.round = round;
+    }
+
+    public GameStatus getGamestatus() {
+        return gamestatus;
     }
 
     public int getScore() {

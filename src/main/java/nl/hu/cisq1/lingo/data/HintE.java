@@ -15,11 +15,28 @@ public class HintE {
     private TurnE turnE;
 
     @ElementCollection
-    private List<Character> c;
+    private List<Character> hintList;
 
     public HintE(){}
 
-    public HintE(TurnE turnE){
+    public HintE(List<Character> hintList, TurnE turnE){
         this.turnE = turnE;
+        this.hintList = hintList;
+    }
+
+    public TurnE getTurnE() {
+        return turnE;
+    }
+
+    public void setTurnE(TurnE turnE) {
+        this.turnE = turnE;
+    }
+
+    public List<Character> getHintList() {
+        return hintList;
+    }
+
+    public void setHintList(List<Character> hintList) {
+        this.hintList = hintList;
     }
 }

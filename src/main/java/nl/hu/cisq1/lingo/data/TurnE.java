@@ -13,26 +13,32 @@ public class TurnE {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private FeedbackE feedback;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private HintE hint;
 
     @ManyToOne
     @JoinColumn(name = "round_id")
     private RoundE round;
+
     @Column
     private int turnCount;
     private String guess;
 
     public TurnE(){}
 
-    public TurnE(FeedbackE feedback, RoundE round,String guess, int turnCount, HintE hint){
+    public TurnE(FeedbackE feedback, RoundE round, String guess, int turnCount, HintE hint){
         this.feedback = feedback;
         this.round = round;
         this.turnCount = turnCount;
         this.hint = hint;
+        this.guess = guess;
+    }
+    public TurnE(String guess, int turnCount, RoundE round){
+        this.round = round;
+        this.turnCount = turnCount;
         this.guess = guess;
     }
 

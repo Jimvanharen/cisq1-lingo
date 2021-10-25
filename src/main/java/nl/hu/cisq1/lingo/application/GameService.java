@@ -3,6 +3,7 @@ package nl.hu.cisq1.lingo.application;
 import nl.hu.cisq1.lingo.data.GameE;
 import nl.hu.cisq1.lingo.data.GameRepository;
 import nl.hu.cisq1.lingo.data.RoundE;
+import nl.hu.cisq1.lingo.trainer.domain.GameStatus;
 import nl.hu.cisq1.lingo.words.application.WordService;
 import nl.hu.cisq1.lingo.words.domain.Word;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,17 @@ public class GameService {
         this.roundService = roundService;
     }
 
-    public void startGame(){
-        GameE game = new GameE(new ArrayList<RoundE>(), 0);
-        roundService.startRound(game, new Word(wordService.provideRandomWord(5)));
+    public GameE startGame(){
+        GameE game = new GameE(new ArrayList<RoundE>(), 0, GameStatus.PAUSED);
+        roundService.startRound(game, wordService.provideRandomWord(5));
         gameRepository.save(game);
+        return game;
     }
 
+    public GameE getGameById(Long id){
+        return gameRepository.findById(id).orElse(null);
+    }
+    public Long getMaxId(){
+        return gameRepository.maxId().orElse(null);
+    }
 }
