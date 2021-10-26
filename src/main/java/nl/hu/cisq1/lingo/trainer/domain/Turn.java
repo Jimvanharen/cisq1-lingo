@@ -30,14 +30,14 @@ public class Turn {
         }
 
         //Check for all invalid
-        if(round.getWord().getToBeGuessedWord().length() > feedback.getAttempt().length() || round.getWord().getToBeGuessedWord().length() < feedback.getAttempt().length()){
+        if(round.getWord().getValue().length() > feedback.getAttempt().length() || round.getWord().getValue().length() < feedback.getAttempt().length()){
             for(int i = 0; i < feedback.getAttempt().length(); i++){
                 newFeedback.add(i, Mark.INVALID);
             }
             return newFeedback;
         }
         //Check for all Correct
-        if(feedback.getAttempt().equals(round.getWord().getToBeGuessedWord())){
+        if(feedback.getAttempt().equals(round.getWord().getValue())){
             for(int i = 0; i < feedback.getAttempt().length(); i++){
                 newFeedback.add(i, Mark.CORRECT);
                 round.getGame().setScore(round.getGame().getScore() + (5 * (5 - turnCount) + 5));
@@ -46,15 +46,15 @@ public class Turn {
         }
         //Check for CORRECT and PRESENT and ABSENT
             for(int i = 0; i < feedback.getAttempt().length(); i++){
-                if(round.getWord().getToBeGuessedWord().charAt(i) == feedback.getAttempt().charAt(i)){
+                if(round.getWord().getValue().charAt(i) == feedback.getAttempt().charAt(i)){
                     newFeedback.add(Mark.CORRECT);
                 }
-                else if(round.getWord().getToBeGuessedWord().charAt(i) != feedback.getAttempt().charAt(i)){
-                    if(round.getWord().getToBeGuessedWord().contains(
+                else if(round.getWord().getValue().charAt(i) != feedback.getAttempt().charAt(i)){
+                    if(round.getWord().getValue().contains(
                             (Character.toString(feedback.getAttempt().charAt(i))))){
                         newFeedback.add(Mark.PRESENT);
                     }
-                    else if(!round.getWord().getToBeGuessedWord().contains(
+                    else if(!round.getWord().getValue().contains(
                             (Character.toString(feedback.getAttempt().charAt(i))))){
                         newFeedback.add(Mark.ABSENT);
                     }

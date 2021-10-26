@@ -38,7 +38,7 @@ public class TurnService {
 
         FeedbackE feedbackE = new FeedbackE(feedbackOfMarks, turn, guess);
         turn.setFeedback(feedbackE);
-        turn.setHint(hintService.giveHint(turn, new ArrayList<>()));
+        turn.setHint(hintService.giveHint(turn, giveLastHintList(roundE)));
         roundE.addTurn(turn);
         turnRepository.save(turn);
 
@@ -48,10 +48,13 @@ public class TurnService {
     private List<Character> giveLastHintList(RoundE roundE){
         TurnE turnE;
         if(roundE.getTurns().size() > 1){
-            turnE = getTurnById(roundE.getTurns().size() - 1L);
+            turnE = roundE.getTurns().get(roundE.getTurns().size() - 1);
             return turnE.getHint().getHintList();
         }
-        return new ArrayList<>();
+        else{
+            return new ArrayList<>();
+
+        }
     }
 
     public TurnE getTurnById(Long id){

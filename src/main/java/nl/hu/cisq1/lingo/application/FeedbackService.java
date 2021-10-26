@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class FeedbackService {
 
-    private FeedbackRepository feedbackRepository;
+    private final FeedbackRepository feedbackRepository;
 
     public FeedbackService(FeedbackRepository feedbackRepository){
         this.feedbackRepository = feedbackRepository;
