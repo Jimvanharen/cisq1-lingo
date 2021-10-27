@@ -41,6 +41,9 @@ public class TurnE {
         this.turnCount = turnCount;
         this.guess = guess;
     }
+    public TurnE(RoundE round){
+        this.round = round;
+    }
 
     public FeedbackE getFeedback() {
         return feedback;

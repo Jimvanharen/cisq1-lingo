@@ -5,6 +5,7 @@ import nl.hu.cisq1.lingo.trainer.domain.Mark;
 import nl.hu.cisq1.lingo.trainer.domain.Turn;
 import nl.hu.cisq1.lingo.trainer.domain.exception.TurnCountException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.Null;
 import java.util.ArrayList;
@@ -14,9 +15,11 @@ import java.util.Optional;
 @Service
 public class TurnService {
 
-    private TurnRepository turnRepository;
-    private HintService hintService;
-    private FeedbackService feedbackService;
+    private final TurnRepository turnRepository;
+    private final HintService hintService;
+    private final FeedbackService feedbackService;
+
+    private static final int TURN_BOUNDARY = 5;
 
     public TurnService(TurnRepository turnRepository, HintService hintService, FeedbackService feedbackService){
         this.turnRepository = turnRepository;
@@ -25,16 +28,12 @@ public class TurnService {
     }
 
     public TurnE startTurn(RoundE roundE, String guess){
-        if(roundE.getTurns().size() >= 5){
+        if(roundE.getTurns().size() >= TURN_BOUNDARY){
             throw new TurnCountException();
         }
 
         TurnE turn = new TurnE(guess, roundE.getTurns().size(), roundE);
         List<Mark> feedbackOfMarks = feedbackService.giveFeedback(new ArrayList<>(), roundE, turn);
-
-        for(Mark m : feedbackOfMarks){
-            System.out.println(m);
-        }
 
         FeedbackE feedbackE = new FeedbackE(feedbackOfMarks, turn, guess);
         turn.setFeedback(feedbackE);

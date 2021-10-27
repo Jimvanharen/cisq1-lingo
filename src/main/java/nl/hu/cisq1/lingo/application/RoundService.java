@@ -4,6 +4,8 @@ import nl.hu.cisq1.lingo.data.GameE;
 import nl.hu.cisq1.lingo.data.RoundE;
 import nl.hu.cisq1.lingo.data.RoundRepository;
 import nl.hu.cisq1.lingo.data.TurnE;
+import nl.hu.cisq1.lingo.trainer.domain.Hint;
+import nl.hu.cisq1.lingo.trainer.domain.Turn;
 import nl.hu.cisq1.lingo.words.domain.Word;
 import org.springframework.stereotype.Service;
 

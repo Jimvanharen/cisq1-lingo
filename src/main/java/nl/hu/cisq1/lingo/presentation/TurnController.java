@@ -35,7 +35,7 @@ public class TurnController {
     @PostMapping("/start-turn")
     public ResponseEntity<?> startTurn(@RequestParam String guess){
         try{
-            turnService.startTurn(roundService.getRoundById(roundService.getRoundMaxId()) ,guess);
+            turnService.startTurn(roundService.getRoundById(roundService.getRoundMaxId()), guess);
         }
         catch(Exception e){
             e.printStackTrace();

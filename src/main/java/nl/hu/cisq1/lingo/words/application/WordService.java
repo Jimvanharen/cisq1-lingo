@@ -25,6 +25,6 @@ public class WordService {
 
     public String provideRandomWordByRandomLength(){
 
-        return provideRandomWord((int) Math.floor(Math.random() * (7-5 + 1) + 5));
+        return provideRandomWord((int) Math.floor(Math.random() * (6-5 + 1) + 5));
     }
 }

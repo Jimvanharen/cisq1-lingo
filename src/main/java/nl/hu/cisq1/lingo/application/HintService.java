@@ -19,6 +19,7 @@ public class HintService {
 
     private HintRepository hintRepository;
     private RoundService roundService;
+    private TurnService turnService;
 
     public HintService(HintRepository hintRepository, RoundService roundService){
         this.hintRepository = hintRepository;
