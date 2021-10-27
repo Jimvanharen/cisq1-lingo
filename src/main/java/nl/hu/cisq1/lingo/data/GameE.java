@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import nl.hu.cisq1.lingo.trainer.domain.GameStatus;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public class GameE {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "game")
     private List<RoundE> round;
 

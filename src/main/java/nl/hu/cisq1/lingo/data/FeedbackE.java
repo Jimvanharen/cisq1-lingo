@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import nl.hu.cisq1.lingo.trainer.domain.Feedback;
 import nl.hu.cisq1.lingo.trainer.domain.Mark;
 
@@ -17,9 +18,11 @@ public class FeedbackE {
     @ElementCollection
     private List<Mark> marks;
 
-    @OneToOne
+    @JsonIgnore
+    @OneToOne(mappedBy = "feedback")
     private TurnE turnE;
 
+    @JsonIgnore
     @Column
     private String attempt;
 

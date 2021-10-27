@@ -1,5 +1,7 @@
 package nl.hu.cisq1.lingo.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,7 +13,8 @@ public class HintE {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @JsonIgnore
+    @OneToOne(mappedBy = "hint")
     private TurnE turnE;
 
     @ElementCollection

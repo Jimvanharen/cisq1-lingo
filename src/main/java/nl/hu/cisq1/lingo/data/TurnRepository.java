@@ -9,4 +9,6 @@ public interface TurnRepository extends JpaRepository<TurnE, Long> {
 
     @Query("SELECT MAX(id) from TurnE")
     Optional<Long> maxId();
+
+    Optional<TurnE> findByRoundId(Long id);
 }

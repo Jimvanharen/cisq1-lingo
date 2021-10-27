@@ -1,10 +1,15 @@
 package nl.hu.cisq1.lingo.presentation;
 
+import javassist.NotFoundException;
 import nl.hu.cisq1.lingo.application.RoundService;
 import nl.hu.cisq1.lingo.application.TurnService;
+import nl.hu.cisq1.lingo.data.RoundE;
+import nl.hu.cisq1.lingo.data.TurnE;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -42,5 +47,18 @@ public class TurnController {
             return new ResponseEntity<>("Something went wrong submitting the turn", HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>("Turn submitted...", HttpStatus.OK);
+    }
+
+    @GetMapping("/turns")
+        public ResponseEntity<?> getTurnsByLastRound(){
+        try{
+            List<TurnE> turns = turnService.getAllTurnsOfLastRound();
+
+            return new ResponseEntity<>(turns, HttpStatus.OK);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>("Something went wrong getting turns" ,HttpStatus.CONFLICT);
+        }
     }
 }

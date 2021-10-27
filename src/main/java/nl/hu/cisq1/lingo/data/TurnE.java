@@ -1,5 +1,6 @@
 package nl.hu.cisq1.lingo.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import nl.hu.cisq1.lingo.trainer.domain.Feedback;
 import nl.hu.cisq1.lingo.trainer.domain.Hint;
 
@@ -14,9 +15,11 @@ public class TurnE {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "feedback_id", referencedColumnName = "id")
     private FeedbackE feedback;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "hint_id", referencedColumnName = "id")
     private HintE hint;
 
     @ManyToOne
