@@ -50,15 +50,15 @@ public class TurnController {
     }
 
     @GetMapping("/turns")
-        public ResponseEntity<?> getTurnsByLastRound(){
+    public ResponseEntity<List<TurnE>> getTurnsByLastRound(){
+        List<TurnE> turnES;
         try{
-            List<TurnE> turns = turnService.getAllTurnsOfLastRound();
-
-            return new ResponseEntity<>(turns, HttpStatus.OK);
+            turnES = roundService.getAllTurnsOfLastRound();
         }
         catch(Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>("Something went wrong getting turns" ,HttpStatus.CONFLICT);
+            return new ResponseEntity<>(List.of(), HttpStatus.CONFLICT);
         }
+        return new ResponseEntity<>(turnES, HttpStatus.OK);
     }
 }

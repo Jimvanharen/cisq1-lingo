@@ -17,16 +17,14 @@ public class TurnService {
 
     private final TurnRepository turnRepository;
     private final HintService hintService;
-    private final RoundService roundService;
     private final FeedbackService feedbackService;
 
     private static final int TURN_BOUNDARY = 5;
 
-    public TurnService(TurnRepository turnRepository, HintService hintService, FeedbackService feedbackService, RoundService roundService){
+    public TurnService(TurnRepository turnRepository, HintService hintService, FeedbackService feedbackService){
         this.turnRepository = turnRepository;
         this.hintService = hintService;
         this.feedbackService = feedbackService;
-        this.roundService = roundService;
     }
 
     public TurnE startTurn(RoundE roundE, String guess){
@@ -46,20 +44,14 @@ public class TurnService {
         return turn;
     }
 
-    public List<TurnE> getAllTurnsOfLastRound(){
-        RoundE roundE = roundService.getRoundById(roundService.getRoundMaxId());
-        return roundE.getTurns();
-    }
-
     private List<Character> giveLastHintList(RoundE roundE){
         TurnE turnE;
-        if(roundE.getTurns().size() > 1){
+        if(roundE.getTurns().size() >= 1){
             turnE = roundE.getTurns().get(roundE.getTurns().size() - 1);
             return turnE.getHint().getHintList();
         }
         else{
             return new ArrayList<>();
-
         }
     }
 

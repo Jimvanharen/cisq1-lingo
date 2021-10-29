@@ -17,13 +17,10 @@ import java.util.List;
 @Service
 public class HintService {
 
-    private HintRepository hintRepository;
-    private RoundService roundService;
-    private TurnService turnService;
+    private final HintRepository hintRepository;
 
-    public HintService(HintRepository hintRepository, RoundService roundService){
+    public HintService(HintRepository hintRepository){
         this.hintRepository = hintRepository;
-        this.roundService = roundService;
     }
 
     public HintE giveHint(TurnE turnE, List<Character> hintList){
@@ -33,12 +30,9 @@ public class HintService {
 
         List<Character> newList = new ArrayList<>(hintList);
         if(newList.isEmpty()) {
-            newList.add(turnE.getRound().getWord().getValue().charAt(0));
-            for (int i = 0; i < turnE.getRound().getWord().getValue().length() - 1; i++) {
-                newList.add('.');
-            }
-            return new HintE(newList, turnE);
+            return provideFirstLetter(turnE);
         }
+
         for(int i = 0; i < turnE.getFeedback().getMarks().size(); i++) {
             if (turnE.getFeedback().getMarks().get(i).equals(Mark.CORRECT) && newList.get(i).equals('.')) {
                 newList.remove(i);
@@ -46,6 +40,15 @@ public class HintService {
             } else if (turnE.getFeedback().getMarks().get(i).equals(Mark.PRESENT)) {
                 //later
             }
+        }
+        return new HintE(newList, turnE);
+    }
+
+    public HintE provideFirstLetter(TurnE turnE){
+        List<Character> newList = new ArrayList<>();
+        newList.add(turnE.getRound().getWord().getValue().charAt(0));
+        for (int i = 0; i < turnE.getRound().getWord().getValue().length() - 1; i++) {
+            newList.add('.');
         }
         return new HintE(newList, turnE);
     }

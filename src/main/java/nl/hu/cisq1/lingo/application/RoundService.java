@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -18,20 +19,29 @@ import java.util.Objects;
 public class RoundService {
 
     private RoundRepository roundRepository;
+    private TurnService turnService;
 
-    public RoundService(RoundRepository roundRepository){
+    public RoundService(RoundRepository roundRepository, TurnService turnService){
         this.roundRepository = roundRepository;
+        this.turnService = turnService;
     }
 
     public RoundE startRound(GameE game, String toBeGuessedWord){
         RoundE round = new RoundE(new Word(toBeGuessedWord), game, new ArrayList<TurnE>());
         game.addRound(round);
         roundRepository.save(round);
+        turnService.startTurn(round, "");
         return round;
     }
 
     public void removeRound(Long id){
         roundRepository.delete(Objects.requireNonNull(roundRepository.findById(id).orElse(null)));
+    }
+
+    public List<TurnE> getAllTurnsOfLastRound(){
+        RoundE roundE = getRoundById(getRoundMaxId());
+        System.out.println(roundE.getTurns());
+        return roundE.getTurns();
     }
 
     public Long getRoundMaxId(){
