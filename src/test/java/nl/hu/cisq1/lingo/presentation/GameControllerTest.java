@@ -44,7 +44,7 @@ class GameControllerTest {
     @Test
     void testStartGame() throws Exception {
         GameE gameE = new GameE();
-        gameE.setRound(new ArrayList<RoundE>());
+        gameE.setRound(new ArrayList<>());
         gameE.setScore(3);
         when(this.gameService.startGame()).thenReturn(gameE);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/game/start-game");

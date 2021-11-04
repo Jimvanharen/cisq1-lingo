@@ -57,13 +57,13 @@ class GameServiceTest {
 
         RoundE roundE = new RoundE();
         roundE.setWord(new Word());
-        ArrayList<TurnE> turnEList = new ArrayList<TurnE>();
+        ArrayList<TurnE> turnEList = new ArrayList<>();
         roundE.setTurns(turnEList);
         roundE.setGame(gameE);
         when(this.roundService.startRound((GameE) any(), (String) any())).thenReturn(roundE);
 
         GameE gameE1 = new GameE();
-        gameE1.setRound(new ArrayList<RoundE>());
+        gameE1.setRound(new ArrayList<>());
         gameE1.setScore(3);
         when(this.gameRepository.save((GameE) any())).thenReturn(gameE1);
         GameE actualStartGameResult = this.gameService.startGame();

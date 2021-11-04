@@ -61,7 +61,7 @@ class RoundControllerTest {
 
         RoundE roundE = new RoundE();
         roundE.setWord(new Word());
-        roundE.setTurns(new ArrayList<TurnE>());
+        roundE.setTurns(new ArrayList<>());
         roundE.setGame(gameE);
         when(this.roundService.startRound((GameE) any(), (String) any())).thenReturn(roundE);
 

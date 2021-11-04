@@ -38,6 +38,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = {RoundService.class, TurnService.class})
 @ExtendWith(SpringExtension.class)
 class RoundServiceTest {
+
     @MockBean
     private RoundRepository roundRepository;
 
@@ -50,21 +51,21 @@ class RoundServiceTest {
     @Test
     void testStartRound() {
         GameE gameE = new GameE();
-        gameE.setRound(new ArrayList<RoundE>());
+        gameE.setRound(new ArrayList<>());
         gameE.setScore(3);
 
         RoundE roundE = new RoundE();
         roundE.setWord(new Word());
-        roundE.setTurns(new ArrayList<TurnE>());
+        roundE.setTurns(new ArrayList<>());
         roundE.setGame(gameE);
 
         GameE gameE1 = new GameE();
-        gameE1.setRound(new ArrayList<RoundE>());
+        gameE1.setRound(new ArrayList<>());
         gameE1.setScore(3);
 
         RoundE roundE1 = new RoundE();
         roundE1.setWord(new Word());
-        roundE1.setTurns(new ArrayList<TurnE>());
+        roundE1.setTurns(new ArrayList<>());
         roundE1.setGame(gameE1);
 
         TurnE turnE = new TurnE();
