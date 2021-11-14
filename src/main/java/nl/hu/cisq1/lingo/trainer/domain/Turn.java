@@ -1,69 +1,126 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import java.security.InvalidParameterException;
+import nl.hu.cisq1.lingo.Generated;
+import nl.hu.cisq1.lingo.trainer.domain.exception.TurnCountException;
+
+import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+@Entity
+@Table(name = "turn")
 public class Turn {
 
-    private Feedback feedback;
-    private Round round;
-    private int turnCount;
+    private static final int TURN_BOUNDARY = 5;
 
-    public Turn(Feedback feedback, Round round, int turnCount){
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "feedback_id", referencedColumnName = "id")
+    private Feedback feedback;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "hint_id", referencedColumnName = "id")
+    private Hint hint;
+
+    @ManyToOne
+    @JoinColumn(name = "round_id")
+    private Round round;
+
+    @Column
+    private int turnCount;
+    private String guess;
+
+    public Turn(){}
+
+    public Turn(Feedback feedback, Round round, String guess, int turnCount, Hint hint){
         this.feedback = feedback;
         this.round = round;
-        if(!(turnCount > Round.getMaxAttempts())){
-            this.turnCount = turnCount;
+        this.turnCount = turnCount;
+        this.hint = hint;
+        this.guess = guess;
+    }
+    public Turn(String guess, int turnCount, Round round){
+        this.round = round;
+        this.turnCount = turnCount;
+        this.guess = guess;
+    }
+    public Turn(Feedback feedback, Hint hint ,Round round){
+        this.round = round;
+        this.feedback = feedback;
+        this.hint = hint;
+    }
+    public Turn(Round round){
+        this.round = round;
+    }
+
+    public Turn startTurn(Round round, String guess) {
+        if(round.getTurns().size() >= TURN_BOUNDARY){
+            throw new TurnCountException();
+        }
+
+        Turn turn = new Turn(guess, round.getTurns().size(), round);
+        List<Mark> feedbackOfMarks = feedback.giveFeedback(new ArrayList<>(), round, turn);
+
+        Feedback feedback = new Feedback(feedbackOfMarks, turn, guess);
+        turn.setFeedback(feedback);
+        turn.setHint(hint.giveHint(turn, giveLastHintList(round)));
+        round.addTurn(turn);
+
+        return turn;
+    }
+
+    @Generated
+    private List<Character> giveLastHintList(Round round){
+        Turn turn;
+        if(round.getTurns().size() >= 1){
+            turn = round.getTurns().get(round.getTurns().size() - 1);
+            return turn.getHint().getHintList();
+        }
+        else{
+            return new ArrayList<>();
         }
     }
 
-    public void startTurn(String attempt){
-
+    public Feedback getFeedback() {
+        return feedback;
     }
 
-    public List<Mark> turnFeedback(List<Mark> prevFeedback){
-        List<Mark> newFeedback = new ArrayList<>(feedback.getAttempt().length());
-        if(turnCount > 1 && !prevFeedback.isEmpty()){
-            newFeedback = prevFeedback;
-        }
+    public void setFeedback(Feedback feedback) {
+        this.feedback = feedback;
+    }
 
-        //Check for all invalid
-        if(round.getWord().getValue().length() > feedback.getAttempt().length() || round.getWord().getValue().length() < feedback.getAttempt().length()){
-            for(int i = 0; i < feedback.getAttempt().length(); i++){
-                newFeedback.add(i, Mark.INVALID);
-            }
-            return newFeedback;
-        }
-        //Check for all Correct
-        if(feedback.getAttempt().equals(round.getWord().getValue())){
-            for(int i = 0; i < feedback.getAttempt().length(); i++){
-                newFeedback.add(i, Mark.CORRECT);
-                round.getGame().setScore(round.getGame().getScore() + (5 * (5 - turnCount) + 5));
-            }
-            return newFeedback;
-        }
-        //Check for CORRECT and PRESENT and ABSENT
-            for(int i = 0; i < feedback.getAttempt().length(); i++){
-                if(round.getWord().getValue().charAt(i) == feedback.getAttempt().charAt(i)){
-                    newFeedback.add(Mark.CORRECT);
-                }
-                else if(round.getWord().getValue().charAt(i) != feedback.getAttempt().charAt(i)){
-                    if(round.getWord().getValue().contains(
-                            (Character.toString(feedback.getAttempt().charAt(i))))){
-                        newFeedback.add(Mark.PRESENT);
-                    }
-                    else if(!round.getWord().getValue().contains(
-                            (Character.toString(feedback.getAttempt().charAt(i))))){
-                        newFeedback.add(Mark.ABSENT);
-                    }
-                }
-            }
-        return newFeedback;
+    public Hint getHint() {
+        return hint;
+    }
+
+    public void setHint(Hint hint) {
+        this.hint = hint;
+    }
+
+    public Round getRound() {
+        return round;
+    }
+
+    public void setRound(Round round) {
+        this.round = round;
     }
 
     public int getTurnCount() {
         return turnCount;
+    }
+
+    public void setTurnCount(int turnCount) {
+        this.turnCount = turnCount;
+    }
+
+    public String getGuess() {
+        return guess;
+    }
+
+    public void setGuess(String guess) {
+        this.guess = guess;
     }
 }

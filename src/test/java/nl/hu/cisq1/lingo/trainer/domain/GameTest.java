@@ -1,29 +1,39 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import nl.hu.cisq1.lingo.words.domain.Word;
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
+import static org.junit.Assert.*;
+
+@DisplayName("Testing the game domain")
 public class GameTest {
 
-    private Game game;
+    public Game game;
 
     @BeforeEach
-    private void setGame(){
-        game = new Game(new Round(new Word("aardgas"), null, new Turn(null, null, 0)), 10);
+    public void init(){
+        game = new Game(new ArrayList<>(), 0, GameStatus.PAUSED);
     }
 
     @Test
-    @DisplayName("Check if attributes work correctly")
-    public void checkGameAttr(){
-        assertEquals("aardgas", game.getRound().getWord().getValue());
-        assertEquals(0, game.getRound().getTurn().getTurnCount());
-        assertEquals(10, game.getScore());
-        assertEquals(5, Game.getMaxRounds());
+    @DisplayName("Testing if round was added succesfully")
+    public void testAddRound(){
+        assertTrue(game.addRound(new Round()));
     }
 
+    @Test
+    @DisplayName("Testing if score was added succesfully")
+    public void testScore(){
+        assertEquals(game.getScore(), 0L);
+    }
 
+    @Test
+    @DisplayName("Testing if gamestatus was added succesfully")
+    public void testGameStatus(){
+        assertEquals(game.getGamestatus(), GameStatus.PAUSED);
+    }
 }

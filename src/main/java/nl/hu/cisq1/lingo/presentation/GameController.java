@@ -1,6 +1,6 @@
 package nl.hu.cisq1.lingo.presentation;
 
-import nl.hu.cisq1.lingo.application.GameService;
+import nl.hu.cisq1.lingo.application.TrainerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/game")
 public class GameController {
 
-    private final GameService gameService;
+    private final TrainerService trainerService;
 
-    public GameController(GameService gameService){
-        this.gameService = gameService;
+    public GameController(TrainerService trainerService){
+        this.trainerService = trainerService;
     }
 
     @PostMapping("/start-game")
     public ResponseEntity<?> startGame(){
         try {
-            gameService.startGame();
+            trainerService.startGame();
         }
         catch(Exception e){
             e.printStackTrace();
