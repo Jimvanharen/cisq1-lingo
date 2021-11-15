@@ -3,6 +3,7 @@ package nl.hu.cisq1.lingo.trainer.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import nl.hu.cisq1.lingo.words.domain.Word;
 
 import javax.persistence.*;
@@ -24,11 +25,12 @@ public class Round {
     @JoinColumn(name = "game_id")
     private Game game;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "round", cascade = CascadeType.ALL)
     private List<Turn> turns;
 
-    public Round(){}
+    public Round(){
+
+    }
 
     public Round(Word word, Game game, List<Turn> turns){
         this.game = game;
@@ -64,6 +66,7 @@ public class Round {
         return game;
     }
 
+    @JsonIgnore
     public List<Turn> getTurns() {
         return turns;
     }

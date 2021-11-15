@@ -1,8 +1,6 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.beans.BeanProperty;
@@ -17,7 +15,6 @@ public class Hint {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
     @OneToOne(mappedBy = "hint")
     private Turn turn;
 
@@ -62,6 +59,7 @@ public class Hint {
         return new Hint(newList, turn);
     }
 
+    @JsonIgnore
     public Turn getTurnE() {
         return turn;
     }

@@ -1,6 +1,10 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,11 +21,9 @@ public class Feedback {
     @ElementCollection
     private List<Mark> marks;
 
-    @JsonIgnore
     @OneToOne(mappedBy = "feedback")
     private Turn turn;
 
-    @JsonIgnore
     @Column
     private String attempt;
 
@@ -81,6 +83,7 @@ public class Feedback {
         this.marks = marks;
     }
 
+    @JsonIgnore
     public Turn getTurnE() {
         return turn;
     }

@@ -1,5 +1,8 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import nl.hu.cisq1.lingo.Generated;
 import nl.hu.cisq1.lingo.trainer.domain.exception.TurnCountException;
 
@@ -20,6 +23,7 @@ public class Turn {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "feedback_id", referencedColumnName = "id")
     private Feedback feedback;
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hint_id", referencedColumnName = "id")

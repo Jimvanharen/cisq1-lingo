@@ -14,7 +14,6 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "game")
     private List<Round> round;
 
@@ -48,6 +47,7 @@ public class Game {
         this.score = score;
     }
 
+    @JsonIgnore
     public List<Round> getRounds() {
         return round;
     }

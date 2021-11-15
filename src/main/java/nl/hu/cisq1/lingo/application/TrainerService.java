@@ -62,7 +62,6 @@ public class TrainerService {
 
     public List<Turn> getAllTurnsOfLastRound(){
         Round round = getRoundById(getRoundMaxId());
-        System.out.println(round.getTurns());
         return round.getTurns();
     }
 
