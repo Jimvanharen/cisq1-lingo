@@ -63,10 +63,8 @@ class HintTest {
     @DisplayName("Test nullpointer exception")
     void testNullpointer(){
         Hint hint = new Hint();
-        assertThrows(NullPointerException.class, () -> {
-             hint.giveHint(new Turn(null, hint, new Round()),
-                    null);
-        });
+        assertThrows(NullPointerException.class, () -> hint.giveHint(new Turn(null, hint, new Round()),
+               null));
     }
 
 

@@ -1,9 +1,5 @@
 package nl.hu.cisq1.lingo.trainer.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -13,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class FeedbackTest {
     @Test
@@ -49,14 +47,18 @@ class FeedbackTest {
         Feedback feedback = new Feedback(new ArrayList<>(), turn, attempt);
         List<Mark> marks = feedback.giveFeedback(new ArrayList<>(), round, turn);
         System.out.println(marks);
-
     }
 
     private static Stream<Arguments> provideFeedbackExamples() {
         return Stream.of(
-                Arguments.of("woord", "woordt"),
-                Arguments.of("aardgas", "aartgas"),
-                Arguments.of("aardgas", "aardgas"),
-                Arguments.of("adopter", "adoptie"));
+                Arguments.of("banaan", "banana"),
+                Arguments.of("ksuir", "kruis"),
+                Arguments.of("aaabbb", "bbbaaa"),
+                Arguments.of("aaaaaa", "bbbbbb"),
+                Arguments.of("gehoor", "onmens"),
+                Arguments.of("aabbcc", "abcabc"),
+                Arguments.of("alianna", "liniaal"),
+                Arguments.of("heren", "haren"),
+                Arguments.of("eeaaae", "aaeeae"));
     }
 }
